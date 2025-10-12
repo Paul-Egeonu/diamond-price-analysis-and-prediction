@@ -68,22 +68,23 @@ Diamond_Price_Analysis/
    - Correlation matrix and feature relationships.  
    - Visualization of `carat` vs `price`.  
 
-   ![EDA Price Distribution](images/eda_price_distribution.png)
+   <img width="1200" height="900" alt="carat_price_scatter" src="https://github.com/user-attachments/assets/0159b74a-4d5a-4ea7-a527-4c5ad2b66deb" />
 
-3. **Feature Engineering**  
+
+4. **Feature Engineering**  
    - Created `volume = x * y * z` feature.  
    - One-hot encoded categorical features (`cut`, `color`, `clarity`).  
    - Scaled numerical features for consistency.
 
-4. **Model Training**  
+5. **Model Training**  
    - Compared multiple regressors (Linear, RandomForest, XGBoost).  
    - Final model: **XGBoostRegressor** (best RMSE & R²).  
 
-5. **Evaluation**  
+6. **Evaluation**  
    - Computed RMSE, MAE, and R² metrics.  
    - Interpreted model performance and business significance.  
 
-6. **Deployment**  
+7. **Deployment**  
    - Streamlit app (`diamond_pricer.py`) for interactive price prediction.  
    - Model and preprocessing pipeline saved using `joblib`.
 

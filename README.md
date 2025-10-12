@@ -199,7 +199,8 @@ else:
 
 ---
 
-<img width="1200" height="900" alt="rf_feature_importance" src="https://github.com/user-attachments/assets/931f9378-d4c0-4a78-987a-57e8a517e069" />
+<img width="1200" height="1425" alt="xgb_shap_summary" src="https://github.com/user-attachments/assets/e0651de7-8bf8-49fb-bda2-7255d0c70573" />
+
 
 ---
 
@@ -219,6 +220,9 @@ Run the Streamlit app locally:
 pip install -r requirements.txt
 streamlit run app/diamond_pricer.py
 ```
+
+![diamond_pricer](https://github.com/user-attachments/assets/3fb3048c-967b-40e4-bb35-aeeca213d58f)
+
 
 ---
 

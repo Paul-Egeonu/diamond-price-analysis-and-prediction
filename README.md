@@ -271,5 +271,3 @@ _Data Analyst & Machine Learning Practitioner_
 [LinkedIn](https://www.linkedin.com/paul-egeonu) | [GitHub](https://github.com/Paul-Egeonu)
 
 ---
-
-![ERD](images/Diamond_ERD.png)

@@ -72,6 +72,8 @@ Diamond_Price_Analysis/
 
 <img width="1500" height="600" alt="price_carat_hist" src="https://github.com/user-attachments/assets/4c7bb88b-0b24-4707-bbf1-95bb0344ee81" />
 
+<img width="1200" height="900" alt="corr_heatmap" src="https://github.com/user-attachments/assets/c6eaed7d-e0f2-4d50-b017-e3df1a837999" />
+
 <img width="1200" height="900" alt="carat_price_scatter" src="https://github.com/user-attachments/assets/0159b74a-4d5a-4ea7-a527-4c5ad2b66deb" />
 
 
@@ -100,44 +102,89 @@ Diamond_Price_Analysis/
 
 ### 🔹 Data Load & Initial Inspection
 ```python
-import pandas as pd
-df = pd.read_csv('data/diamond_price_data.csv')
-df.head()
+DATA_PATH = os.path.join('data','diamonds.csv')
+VIS_DIR = os.path.join('visuals')
+os.makedirs(VIS_DIR, exist_ok=True)
+
+# Load
+print('Loading data from', DATA_PATH)
+df = pd.read_csv(DATA_PATH)
+df.info()
 ```
 **Explanation:** Load and preview the dataset to confirm structure, datatypes, and detect anomalies like zero dimensions.
 
 ### 🔹 EDA — Price Distribution
 ```python
+import matplotlib.pyplot as plt
 import seaborn as sns
-sns.histplot(df['price'], bins=60, kde=True)
+%matplotlib inline
+
+plt.figure(figsize=(10,4))
+plt.subplot(1,2,1)
+sns.histplot(df_clean['price'], bins=50, kde=True)
+plt.title('Price distribution')
 ```
 **Interpretation:** Price is right-skewed; consider log-transform (`np.log(price)`) to stabilize variance for linear models.
 
 ### 🔹 Feature Engineering
 ```python
+from sklearn.preprocessing import OneHotEncoder
+
+df['price_per_carat'] = df['price'] / df['carat']
 df['volume'] = df['x'] * df['y'] * df['z']
-df = pd.get_dummies(df, columns=['cut','color','clarity'], drop_first=True)
+
+# Optional cap: filter extreme high prices to reduce skew for modeling diagnostics
+price_cap = df['price'].quantile(0.999)
+df = df[df['price'] <= price_cap].copy()
+print('After capping extreme prices:', df.shape)
+
+# Features and target
+FEATURES = ['carat','depth','table','x','y','z','volume']
+CAT = ['cut','color','clarity']
+TARGET = 'price'
+
+# Train-test split
+train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)
+print('Train/test sizes:', train_df.shape, test_df.shape)
+
+# Encoder fit on train
+enc = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
+enc.fit(train_df[CAT])
+
+def prepare_X(df_in, encoder=enc):
+    df2 = df_in.copy()
+    cat_enc = encoder.transform(df2[CAT])
+    cat_cols = encoder.get_feature_names_out(CAT)
+    df_cat = pd.DataFrame(cat_enc, columns=cat_cols, index=df2.index)
+    X = pd.concat([df2[FEATURES].reset_index(drop=True), df_cat.reset_index(drop=True)], axis=1)
+    return X
+
+X_train = prepare_X(train_df)
+X_test = prepare_X(test_df)
+y_train = train_df[TARGET]
+y_test = test_df[TARGET]
+
+print('X shapes:', X_train.shape, X_test.shape)
 ```
-**Interpretation:** Derived volume captures 3D size, while one-hot encoding converts categorical features into numeric form.
+**Interpretation:** one-hot encoding converts categorical features into numeric form.
 
 ### 🔹 Modeling (XGBoost Example)
 ```python
-from xgboost import XGBRegressor
-model = XGBRegressor(n_estimators=300, learning_rate=0.05, max_depth=6, random_state=42)
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test)
+if xgb_available:
+    xgb = XGBRegressor(random_state=42, n_jobs=-1, objective='reg:squarederror')
+    xgb_params = {'n_estimators':[100,200], 'max_depth':[4,6,8], 'learning_rate':[0.05,0.1]}
+    cv_xgb = GridSearchCV(xgb, xgb_params, cv=3, scoring='neg_root_mean_squared_error', n_jobs=-1, verbose=1)
+    cv_xgb.fit(X_train, y_train)
+    print('Best XGB params:', cv_xgb.best_params_)
+    xgb_best = cv_xgb.best_estimator_
+    xgb_preds = xgb_best.predict(X_test)
+    print('XGB R2:', r2_score(y_test, xgb_preds))
+    print('XGB RMSE:', sqrt(mean_squared_error(y_test, xgb_preds)))
+else:
+    print('XGBoost not available in the environment. If you want XGBoost, install xgboost and rerun.')
 ```
 **Interpretation:** XGBoost captures non-linear relationships (e.g., `carat` × `clarity`). Model tuned via cross-validation.
 
-### 🔹 Evaluation
-```python
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-rmse = mean_squared_error(y_test, y_pred, squared=False)
-mae = mean_absolute_error(y_test, y_pred)
-r2 = r2_score(y_test, y_pred)
-print(f'RMSE: {rmse:.2f}, MAE: {mae:.2f}, R2: {r2:.3f}')
-```
-**Interpretation:** RMSE and MAE quantify prediction error in USD; R² shows variance explained. Compare RMSE to average price to estimate relative error.
 
 ---
 
@@ -145,13 +192,13 @@ print(f'RMSE: {rmse:.2f}, MAE: {mae:.2f}, R2: {r2:.3f}')
 
 | Metric | Value |
 |---------|--------|
-| **RMSE** | 541.23 |
-| **MAE** | 312.45 |
+| **RMSE** | 523.5 |
 | **R²** | 0.982 |
 
 ✅ Model explains ~98% of variance in price with low average error.
 
 ![Feature Importance](images/feature_importance.png)
+<img width="1200" height="900" alt="rf_feature_importance" src="https://github.com/user-attachments/assets/931f9378-d4c0-4a78-987a-57e8a517e069" />
 
 ---
 

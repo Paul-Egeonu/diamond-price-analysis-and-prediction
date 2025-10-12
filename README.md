@@ -87,7 +87,7 @@ Diamond_Price_Analysis/
    - Final model: **XGBoostRegressor** (best RMSE & R²).  
 
 6. **Evaluation**  
-   - Computed RMSE, MAE, and R² metrics.  
+   - Computed RMSE and R² metrics.  
    - Interpreted model performance and business significance.  
 
 7. **Deployment**  

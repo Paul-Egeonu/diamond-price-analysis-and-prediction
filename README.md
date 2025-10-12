@@ -199,7 +199,6 @@ else:
 
 ---
 
-![Feature Importance]
 <img width="1200" height="900" alt="rf_feature_importance" src="https://github.com/user-attachments/assets/931f9378-d4c0-4a78-987a-57e8a517e069" />
 
 ---

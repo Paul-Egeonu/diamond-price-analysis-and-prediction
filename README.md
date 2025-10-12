@@ -206,10 +206,10 @@ else:
 
 ## 🧠 Insights
 
-- `carat` has the strongest correlation with price.  
-- Higher `clarity` and `cut` grades drive exponential increases in price.  
-- Feature engineering (adding volume) improved model accuracy by ~15%.  
-- The app enables quick valuation without manual estimation errors.
+- `carat` remains highly correlated with price, but the model reveals that volume (x × y × z) and the y dimension (length) capture diamond size and proportion more effectively than carat alone.  
+- Higher `clarity` and `cut` grades lead to exponential price increases, confirming that visual perfection drives premium value.
+- Feature engineering (adding volume) improved model accuracy by approximately 15%, highlighting the importance of geometric features in pricing.
+- The deployed Streamlit app enables quick, consistent, and error-free valuation of diamonds — eliminating manual estimation uncertainty.
 
 ---
 

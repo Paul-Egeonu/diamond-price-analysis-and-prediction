@@ -197,7 +197,9 @@ else:
 
 ✅ Model explains ~98% of variance in price with low average error.
 
-![Feature Importance](images/feature_importance.png)
+---
+
+![Feature Importance]
 <img width="1200" height="900" alt="rf_feature_importance" src="https://github.com/user-attachments/assets/931f9378-d4c0-4a78-987a-57e8a517e069" />
 
 ---

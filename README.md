@@ -68,7 +68,11 @@ Diamond_Price_Analysis/
    - Correlation matrix and feature relationships.  
    - Visualization of `carat` vs `price`.  
 
-   <img width="1200" height="900" alt="carat_price_scatter" src="https://github.com/user-attachments/assets/0159b74a-4d5a-4ea7-a527-4c5ad2b66deb" />
+
+
+<img width="1500" height="600" alt="price_carat_hist" src="https://github.com/user-attachments/assets/4c7bb88b-0b24-4707-bbf1-95bb0344ee81" />
+
+<img width="1200" height="900" alt="carat_price_scatter" src="https://github.com/user-attachments/assets/0159b74a-4d5a-4ea7-a527-4c5ad2b66deb" />
 
 
 4. **Feature Engineering**  

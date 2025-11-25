@@ -268,6 +268,6 @@ seaborn
 
 **Paul Egeonu**  
 _Data Analyst & Machine Learning Practitioner_  
-[LinkedIn](https://www.linkedin.com/paul-egeonu) | [GitHub](https://github.com/Paul-Egeonu)
+[LinkedIn](https://www.linkedin.com/in/paul-egeonu) | [GitHub](https://github.com/Paul-Egeonu)
 
 ---

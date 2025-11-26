@@ -267,7 +267,7 @@ seaborn
 ## 🧾 Author
 
 **Paul Egeonu**  
-_Data Analyst & Machine Learning Practitioner_  
+_Data Analyst | Data Scientist_  
 [LinkedIn](https://www.linkedin.com/in/paul-egeonu) | [GitHub](https://github.com/Paul-Egeonu)
 
 ---

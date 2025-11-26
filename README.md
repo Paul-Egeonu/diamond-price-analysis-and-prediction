@@ -25,9 +25,9 @@ Diamond_Price_Analysis/
 │── data/
 │   └── diamond_price_data.csv
 │── notebook/
-│   └── diamond_price_analysis_portfolio.ipynb   # Enhanced with markdown explanations
+│   └── diamond_price_analysis_portfolio.ipynb  
 │── app/
-│   └── diamond_pricer.py                         # Streamlit app
+│   └── diamond_pricer.py                       
 │── models/
 │   ├── preprocessing_pipeline.pkl
 │   └── best_diamond_model.joblib
